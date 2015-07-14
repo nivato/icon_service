@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Images">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Images</title>
+        <meta name="author" content="Nazar Ivato" />
+        <%= favicon_link_tag "/favicon.ico?id=11" %>
+        <%= stylesheet_link_tag    'application', media: 'all' %>
+        <%= javascript_include_tag 'application' %>
+        <%= csrf_meta_tags %>
+    </head>
+    <body ng-controller="ApplicationController as app">
+        <div class="container">
+            <div class="page-header">
+                <h1><span class="glyphicon glyphicon-picture"></span> Icon Service</h1>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Create Icon</h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
