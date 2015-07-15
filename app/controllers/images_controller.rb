@@ -10,14 +10,14 @@ class ImagesController < ApplicationController
     if @image.save
       render json: {status: :ok, data: 'You have successfully called POST images.json.'}, status: :ok
     else
-      render json: {status: :error, messages: ['Oopsie! Something went wrong!']}, status: :bad_request
+      render json: {status: :error, messages: ['Oopsie! Something went wrong!', @image.error]}, status: :bad_request
     end
   end
 
   private
 
   def image_params
-    params.require(:image).permit(:name, :url)
+    params.require(:image).permit(:name, :origin_url)
   end
 
 end

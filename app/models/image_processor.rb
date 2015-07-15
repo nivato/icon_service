@@ -5,32 +5,36 @@ class ImageProcessor
   include Magick
 
   def initialize(origin_url)
-    @origin_url = origin_url
+    @image_meta = {}
+    @image_meta[:origin_url] = origin_url
+    @image_meta[:extension] = File.extname(origin_url).downcase
+    @image_meta[:saved_name] = "#{SecureRandom.hex(5)}#{@image_meta[:extension]}"
+    @image_meta[:rel_path] = "public/icons/#{@image_meta[:saved_name]}"
+    @allowed_content_types = %w(image/jpeg image/pjpeg image/png image/gif image/bmp image/x-windows-bmp)
+    @resized_image_width = 32 # TODO: Change this to 5px, as required in a task
   end
 
   def process
-    saved_name = "#{SecureRandom.hex(5)}.jpg"
-    file_name = "public/icons/#{saved_name}"
-    self.download(@origin_url, file_name)
-    saved_name
+    download
+    puts "\n--> Succeed! META: #{@image_meta.inspect}"
+    @image_meta
   end
 
-  def download(uri, filename)
-    bytes_total = nil
+  private
+
+  def download
     begin
-      open(uri, read_timeout: 500,
-        content_length_proc: lambda {|content_length| bytes_total = content_length}
-      ) do |io|
-        puts "\n--> TOTAL BYTES: #{bytes_total}"
-        puts "\n--> TOTAL KILOBYTES: #{bytes_total/1000} Kb"
-        puts "\n--> CONTENT TYPE: #{io.content_type}"
-        puts "\n--> FILE EXTENTION: #{File.extname(uri)}"
-        puts "\n--> Succeed, writing to #{filename}"
-        File.open(filename, 'wb'){|wf| wf.write io.read}
+      open(@image_meta[:origin_url], read_timeout: 500) do |io|
+        @image_meta[:content_type] = io.content_type.downcase
+        if !@allowed_content_types.include?(@image_meta[:content_type])
+          raise "Unsupportable content type: #{@image_meta[:content_type]}"
+        end
+        @image_meta[:origin_size_kb] = File.size(io).to_f / 1000
+        image = Magick::Image::from_blob(io.read).first.resize_to_fit(@resized_image_width)
+        image.write(@image_meta[:rel_path])
       end
     rescue => err
-      puts err
-      return
+      @image_meta[:error] = err.to_s
     end
   end
 

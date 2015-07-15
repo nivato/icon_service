@@ -16,6 +16,8 @@ ActiveRecord::Schema.define(version: 20150714141835) do
   create_table "images", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.text     "url",        limit: 65535
+    t.text     "origin_url", limit: 65535
+    t.decimal  "origin_kb",                precision: 15, scale: 8
     t.decimal  "price",                    precision: 10, scale: 8
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false

@@ -33,20 +33,21 @@
                             <form role="form" ng-submit="app.submitImage()">
                                 <div class="form-group">
                                     <label for="image_name">Image Name</label>
-                                    <input ng-model="app.image.name" type="text" class="form-control" id="image_name" placeholder="Image Name" required>
+                                    <input ng-model="app.image.name" ng-change="app.errors = []" type="text" class="form-control" id="image_name" placeholder="Image Name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="image_url">Image URL</label>
-                                    <input ng-model="app.image.url" type="text" class="form-control" id="image_url" placeholder="Image URL" required>
+                                    <input ng-model="app.image.origin_url" ng-change="app.errors = []" type="text" class="form-control" id="image_url" placeholder="Image URL" required>
                                 </div>
+                                <span class="text-danger" ng-repeat="error in app.errors"><span class="glyphicon glyphicon-exclamation-sign"></span> {{error}} </span>
                                 <button type="submit" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-picture"></span> Create Icon</button>
                             </form>
                         </div>
                         <div class="col-xs-4">
-                            <a href="{{app.image.url}}" class="thumbnail" ng-show="app.image.url">
-                                <img ng-src="{{app.image.url}}" style="max-height: 150px;" />
+                            <a href="{{app.image.origin_url}}" class="thumbnail" ng-show="app.image.origin_url">
+                                <img ng-src="{{app.image.origin_url}}" style="max-height: 150px;" />
                             </a>
-                            <h1 class="text-center text-muted" ng-hide="app.image.url">
+                            <h1 class="text-center text-muted" ng-hide="app.image.origin_url">
                                 <span class="glyphicon glyphicon-search"></span>
                             </h1>
                         </div>
@@ -64,17 +65,21 @@
                                 <th>Id</th>
                                 <th>Icon</th>
                                 <th>Name</th>
+                                <th>Origin Size</th>
                                 <th>Price</th>
-                                <th>URL</th>
+                                <th>Link</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="image in app.images">
                                 <td>{{image.id}}</td>
-                                <td><span class="glyphicon glyphicon-picture"></span></td>
+                                <td>
+                                    <a href="{{image.url}}"><img ng-src="{{image.url}}" class="img-responsive" /></a>
+                                </td>
                                 <td>{{image.name}}</td>
+                                <td>{{image.origin_kb}} Kb</td>
                                 <td>{{image.price}} $</td>
-                                <td>{{image.url}}</td>
+                                <td><a href="{{image.url}}"><span class="glyphicon glyphicon-download-alt"></span> {{image.url}}</a></td>
                             </tr>
                         </tbody>
                     </table>

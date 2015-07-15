@@ -14,11 +14,10 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require angular
-//= require angular-route
 //= require_tree .
 
 (function(){
-    var app = angular.module('Images', ['ngRoute']);
+    var app = angular.module('Images', []);
 
     app.config(['$locationProvider', function($locationProvider){
         $locationProvider.html5Mode({enabled: true, requireBase: false});
@@ -28,6 +27,7 @@
         var ctrl = this;
         this.image = {};
         this.images = [];
+        this.errors = [];
 
         this.getImages = function(){
             $http.get('/images.json')
@@ -35,6 +35,7 @@
                     ctrl.images = response.data;
                 })
                 .error(function(response, status, headers, config){
+                    ctrl.errors = response.messages || ['Unknown Error'];
                     console.log(response);
                 });
         };
@@ -46,6 +47,7 @@
                     ctrl.getImages();
                 })
                 .error(function(response, status, headers, config){
+                    ctrl.errors = response.messages || ['Unknown Error'];
                     console.log(response);
                 });
         };
