@@ -18,10 +18,66 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Create Icon</h3>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <h3 class="panel-title">Create Icon</h3>
+                        </div>
+                        <div class="col-xs-4">
+                            <h3 class="panel-title text-center">Preview</h3>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-body">
-                    Panel content
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <form role="form" ng-submit="app.submitImage()">
+                                <div class="form-group">
+                                    <label for="image_name">Image Name</label>
+                                    <input ng-model="app.image.name" type="text" class="form-control" id="image_name" placeholder="Image Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image_url">Image URL</label>
+                                    <input ng-model="app.image.url" type="text" class="form-control" id="image_url" placeholder="Image URL" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-picture"></span> Create Icon</button>
+                            </form>
+                        </div>
+                        <div class="col-xs-4">
+                            <a href="{{app.image.url}}" class="thumbnail" ng-show="app.image.url">
+                                <img ng-src="{{app.image.url}}" style="max-height: 150px;" />
+                            </a>
+                            <h1 class="text-center text-muted" ng-hide="app.image.url">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Icons Gallery</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Icon</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>URL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="image in app.images">
+                                <td>{{image.id}}</td>
+                                <td><span class="glyphicon glyphicon-picture"></span></td>
+                                <td>{{image.name}}</td>
+                                <td>{{image.price}} $</td>
+                                <td>{{image.url}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

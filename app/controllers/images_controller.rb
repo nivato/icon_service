@@ -1,11 +1,23 @@
 class ImagesController < ApplicationController
 
   def index
-    render json: {status: :ok, data: 'You have successfully called GET images.json.'}, status: :ok
+    render json: {status: :ok, data: Image.all}, status: :ok
   end
 
   def create
-    render json: {status: :ok, data: 'You have successfully called POST images.json.'}, status: :ok
+    @image = Image.new(image_params)
+    @image.host = "#{request.protocol}#{request.host}:#{request.port}"
+    if @image.save
+      render json: {status: :ok, data: 'You have successfully called POST images.json.'}, status: :ok
+    else
+      render json: {status: :error, messages: ['Oopsie! Something went wrong!']}, status: :bad_request
+    end
+  end
+
+  private
+
+  def image_params
+    params.require(:image).permit(:name, :url)
   end
 
 end

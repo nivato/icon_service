@@ -15,3 +15,7 @@
 # Ignore gedit backup files
 *~
 
+# Ignore icons storage
+/public/icons/*
+!/public/icons/.keep
+
