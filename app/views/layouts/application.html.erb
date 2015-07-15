@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Images</title>
+        <title>Icon Service</title>
         <meta name="author" content="Nazar Ivato" />
         <%= favicon_link_tag "/favicon.ico?id=11" %>
         <%= stylesheet_link_tag    'application', media: 'all' %>
@@ -65,6 +65,7 @@
                                 <th>Id</th>
                                 <th>Icon</th>
                                 <th>Name</th>
+                                <th>Content Type</th>
                                 <th>Origin Size</th>
                                 <th>Price</th>
                                 <th>Link</th>
@@ -77,8 +78,9 @@
                                     <a href="{{image.url}}"><img ng-src="{{image.url}}" class="img-responsive" /></a>
                                 </td>
                                 <td>{{image.name}}</td>
+                                <td>{{image.content_type}}</td>
                                 <td>{{image.origin_kb}} Kb</td>
-                                <td>{{image.price}} $</td>
+                                <td>{{image.price}} <span class="glyphicon glyphicon-usd"></span></td>
                                 <td><a href="{{image.url}}"><span class="glyphicon glyphicon-download-alt"></span> {{image.url}}</a></td>
                             </tr>
                         </tbody>

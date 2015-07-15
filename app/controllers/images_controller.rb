@@ -10,7 +10,7 @@ class ImagesController < ApplicationController
     if @image.save
       render json: {status: :ok, data: 'You have successfully called POST images.json.'}, status: :ok
     else
-      render json: {status: :error, messages: ['Oopsie! Something went wrong!', @image.error]}, status: :bad_request
+      render json: {status: :error, messages: ['Oopsie! Something went wrong!', @image.processing_error]}, status: :bad_request
     end
   end
 
