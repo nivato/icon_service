@@ -8,7 +8,7 @@ class ImagesController < ApplicationController
     @image = Image.new(image_params)
     @image.host = "#{request.protocol}#{request.host}:#{request.port}"
     if @image.save
-      render json: {status: :ok, data: 'You have successfully called POST images.json.'}, status: :ok
+      render json: {status: :ok, data: @image}, status: :ok
     else
       render json: {status: :error, messages: ['Oopsie! Something went wrong!', @image.processing_error]}, status: :bad_request
     end
